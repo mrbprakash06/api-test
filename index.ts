@@ -44,7 +44,7 @@ async function getForexRates() {
       timeout: 5000,
     });
 
-    if (response.data.Code !== 0) {
+    if (response.data.Code !== "0") {
       throw new Error();
     }
 
