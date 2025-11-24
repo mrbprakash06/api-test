@@ -11,7 +11,11 @@ const privateKey = process.env.NABIL_API_PRIVATE_KEY as string;
 
 async function getForexRates() {
   try {
-    const TimeStamp = new Date().toISOString().replace("Z", "");
+    /** Nabil Server requires a timestamp in NPT */
+    const offset = 20700000;
+    const TimeStamp = new Date(Date.now() + offset)
+      .toISOString()
+      .replace("Z", "");
 
     const requestModel = {
       TransactionId: uuid(),
