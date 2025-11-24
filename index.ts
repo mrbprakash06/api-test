@@ -36,8 +36,6 @@ async function getForexRates() {
       TimeStamp,
     };
 
-    console.log(data);
-
     const response = await axios.post(url, data, {
       headers: {
         Authorization:
@@ -46,7 +44,11 @@ async function getForexRates() {
       timeout: 5000,
     });
 
-    console.log(response.data);
+    if (response.data.Code !== 0) {
+      throw new Error();
+    }
+
+    console.log(response.data.Data);
   } catch (error) {
     console.log(error);
     throw new Error("Error fetching forex rates");
