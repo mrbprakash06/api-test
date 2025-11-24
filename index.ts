@@ -25,27 +25,24 @@ async function getForexRates() {
     const requestData = JSON.stringify(requestModel, null, 0);
     const signatureData = JSON.stringify(signatureModel, null, 0);
 
-    const response = await axios.post(
-      url,
-      {
-        FunctionName: "ForeignExchangeRate",
-        Data: Buffer.from(requestData).toString("base64"),
-        Signature: sign(signatureData, privateKey),
-        TimeStamp,
-      },
-      {
-        headers: {
-          Authorization:
-            "Basic " +
-            Buffer.from(username + ":" + password).toString("base64"),
-        },
-        timeout: 5000,
-      }
-    );
-
-    const data = response.data;
+    const data = {
+      FunctionName: "ForeignExchangeRate",
+      Data: Buffer.from(requestData).toString("base64"),
+      Signature: sign(signatureData, privateKey),
+      TimeStamp,
+    };
 
     console.log(data);
+
+    const response = await axios.post(url, data, {
+      headers: {
+        Authorization:
+          "Basic " + Buffer.from(username + ":" + password).toString("base64"),
+      },
+      timeout: 5000,
+    });
+
+    console.log(response.data);
   } catch (error) {
     console.log(error);
     throw new Error("Error fetching forex rates");
