@@ -19,6 +19,7 @@ async function getForexRates() {
 
     const requestModel = {
       TransactionId: uuid(),
+      Scope: "ALL",
     };
 
     const signatureModel = {
@@ -50,7 +51,6 @@ async function getForexRates() {
 
     console.log(response.data.Data);
   } catch (error) {
-    console.log(error);
     throw new Error("Error fetching forex rates");
   }
 }
